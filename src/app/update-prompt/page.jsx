@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import Form from "@/components/Form"
 
-const CreatePrompt = () => {
+const UpdatePrompt = () => {
     const [submitting, setSubmitting] = useState(false);
     const [post, setPost] = useState({ prompt: "", tag: "" });
 
@@ -59,4 +59,4 @@ const CreatePrompt = () => {
     )
 }
 
-export default CreatePrompt
+export default UpdatePrompt
