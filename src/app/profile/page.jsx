@@ -16,20 +16,27 @@ const ProfileDashboard = () => {
         const fetchPosts = async () => {
             const response = await fetch(`/api/users/${session?.user.id}/posts`);
             console.log(response);
-
             const data = await response.json();
             setAllPosts(data);
         };
-
         if (session?.user.id) fetchPosts();
     }, []);
 
     const handleEdit = (post) => {
-        console.log(post);
+        router.push(`/update-prompt?id=${post._id}`);
         
     }
     const handleDelete = (post) => { 
-        console.log(post);
+        const hasConfirmed = confirm("Are you sure you want to delete this prompt?")
+        if(hasConfirmed) { 
+            try { 
+                fetch(`/api/prompt/${post._id.toString()}`, {method: "DELETE"})
+                const filteredPosts = allPosts.filter((p) => p._id !== post._id)
+                setAllPosts(filteredPosts)
+            } catch (error) { 
+                console.log(error)
+            }
+        }
     }
 
 
