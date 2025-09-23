@@ -37,7 +37,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
                     className="flex-1 flex justify-start items-center gap-3 cursor-pointer"
                     >
                         <Image
-                            src={post.creator.image}
+                            src={post.creator.image || '/assets/images/placeholder.jpeg'}
                             alt="user_image"
                             width={40}
                             height={40}
