@@ -6,9 +6,10 @@ import PromptCardList from '@/components/PromptCardList';
 
 const Feed = () => {
     const [allPosts, setAllPosts] = useState([]);
-    const [searchText, setSearchText] = useState('')
-    const [searchedResults, setSearchedResults] = useState([])
-    const [searchTimeout, setSearchTimeout] = useState(null)
+    const [searchText, setSearchText] = useState('');
+    const [searchedResults, setSearchedResults] = useState([]);
+    const [searchTimeout, setSearchTimeout] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     const filterPrompts = (text) => {
         const regex = new RegExp(text, "i"); // 'i' flag for case-insensitive search
@@ -36,17 +37,23 @@ const Feed = () => {
 
     const handleTagClick = (tag) => {
         // console.log("tag", tag);
-        
+
         setSearchText(tag);
         const searchResult = filterPrompts(tag);
         setSearchedResults(searchResult);
     }
 
     const fetchPosts = async () => {
-        const response = await fetch("/api/prompt");
-        const data = await response.json();
-
-        setAllPosts(data);
+        setLoading(true);
+        try {
+            const response = await fetch("/api/prompt");
+            const data = await response.json();
+            setAllPosts(data);
+        } catch (error) {
+            console.error("Failed to fetch posts:", error);
+        } finally {
+            setLoading(false); // Stop loading when fetch is complete
+        }
     };
 
     useEffect(() => {
@@ -65,10 +72,20 @@ const Feed = () => {
                     required
                 />
             </form>
-            <PromptCardList
-                data={searchedResults.length > 0 ? searchedResults : allPosts}
-                handleTagClick={handleTagClick}
-            />
+            {loading ? (
+                <div
+                    className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                    role="status">
+                    <span
+                        className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
+                    >Loading...</span>
+                </div>
+            ) : (
+                <PromptCardList
+                    data={searchedResults.length > 0 ? searchedResults : allPosts}
+                    handleTagClick={handleTagClick}
+                />
+            )}
         </section>
     )
 }
