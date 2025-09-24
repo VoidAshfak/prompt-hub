@@ -32,8 +32,8 @@ const Nav = () => {
                 <Image
                     src='/assets/images/logo.png'
                     alt='logo'
-                    width={100}
-                    height={100}
+                    width={120}
+                    height={120}
                     className='object-contain'
                 />
                 {/* <p className='logo_text'>Prompt Hub</p> */}
