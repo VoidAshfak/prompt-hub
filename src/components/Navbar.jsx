@@ -32,11 +32,11 @@ const Nav = () => {
                 <Image
                     src='/assets/images/logo.png'
                     alt='logo'
-                    width={30}
-                    height={30}
+                    width={100}
+                    height={100}
                     className='object-contain'
                 />
-                <p className='logo_text'>Prompt Hub</p>
+                {/* <p className='logo_text'>Prompt Hub</p> */}
             </Link>
 
             {/* Desktop Navigation */}
